@@ -1,9 +1,11 @@
   applications:
   - name: djangoapp-met
-    random-route: true
+    routes:
+      - route: djangoapp-met.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
   - name: djangoapp-met-nginx
-    random-route: true
+    routes:
+      - route: djangoapp-met.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
