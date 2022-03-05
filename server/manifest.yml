@@ -1,9 +1,9 @@
   applications:
-  - name: djangoapp
+  - name: djangoapp-met
     random-route: true
     memory: 128M
     buildpack: python_buildpack
-  - name: djangoapp-nginx
+  - name: djangoapp-met-nginx
     random-route: true
     memory: 128M
     buildpack: staticfile_buildpack
