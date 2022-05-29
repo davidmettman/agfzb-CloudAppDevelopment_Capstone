@@ -88,7 +88,7 @@ def registration_request(request):
             login(request, user)
             return redirect('djangoapp:index')
         else:
-            return render(request, 'djangoapp/user_registration.html', context)
+            return render(request, 'djangoapp/registration.html', context)
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
