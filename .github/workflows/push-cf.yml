@@ -10,7 +10,6 @@ env:
   IBM_CLOUD_ORG: david.mettman@gmail.com
   MANIFEST_NAME: manifest.yml
   IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}
-  RESOURCE_GROUP: default
 
 defaults:
   run:
