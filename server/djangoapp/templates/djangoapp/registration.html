@@ -44,7 +44,20 @@
         </div>
     </nav>
     <!--Add a dealer table here -->
-
+    Sign Up
+    <hr>
+    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username" >
+                            <input type="text" class="form-control" placeholder="First_name" name="first_name" >
+                            <input type="text" class="form-control" placeholder="Last_name" name="last_name" >
+                            <input type="password" class="form-control" placeholder="Password" name="password" >
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                        </div>
+    </form>
+        
     </body>
 
 </html>
