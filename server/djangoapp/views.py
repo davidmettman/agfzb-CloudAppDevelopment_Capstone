@@ -66,7 +66,7 @@ def registration_request(request):
     context = {}
     # If it is a GET request, just render the registration page
     if request.method == 'GET':
-        return render(request, 'djangoapp/user_registration.html', context)
+        return render(request, 'djangoapp/registration.html', context)
     # If it is a POST request
     elif request.method == 'POST':
         username = request.POST['username']
