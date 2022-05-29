@@ -46,16 +46,24 @@
     <!--Add a dealer table here -->
     Sign Up
     <hr>
-    <form class="form-inline" action="{% url 'djangoapp:signup' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Username" name="username" >
-                            <input type="text" class="form-control" placeholder="First_name" name="first_name" >
-                            <input type="text" class="form-control" placeholder="Last_name" name="last_name" >
-                            <input type="password" class="form-control" placeholder="Password" name="password" >
-                            <button class="btn btn-primary" type="submit">Sign Up</button>
-                        </div>
-    </form>
+    <form action="{% url 'djangoapp:registration' %}" method="post">
+  <div class="container">
+    <h1>Sign Up</h1>
+    <hr>
+    <label for="username"><b>User Name</b></label>
+    <input type="text" placeholder="Enter User Name: " name="username" required>
+    <label for="firstname"><b>First Name</b></label>
+    <input type="text" placeholder="Enter First Name: " name="first_name" required>
+    <label for="lastname"><b>Last Name</b></label>
+    <input type="text" placeholder="Enter Last Name: " name="last_name" required>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password: " name="password" required>
+    <div>
+        {% csrf_token %}
+        <button class="button" type="submit">Sign Up</button>
+    </div>
+  </div>
+</form>
         
     </body>
 
