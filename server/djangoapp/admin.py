@@ -3,7 +3,9 @@ from django.contrib import admin
 
 
 # Register your models here.
-
+admin.site.register(CarMake)
+admin.site.register(CarModel)
+admin.site.register(CarModelInline)
 # CarModelInline class
 
 # CarModelAdmin class
