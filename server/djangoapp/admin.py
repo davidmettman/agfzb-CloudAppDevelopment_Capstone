@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .models import CarMake, CarModel, CarModelInline
 # from .models import related models
 
 
