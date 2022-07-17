@@ -81,31 +81,6 @@ class CarModel(models.Model):
     def __str__(self):
         return "Name: " + self.name
 
-
-class CarDealer:
-
-    def __init__(self, address, city, id, lat, long, st, zip):
-        # Dealer address
-        self.address = address
-        # Dealer city
-        self.city = city
-       
-        # Dealer id
-        self.id = id
-        # Location lat
-        self.lat = lat
-        # Location long
-        self.long = long
-
-        # Dealer state
-        self.st = st
-        # Dealer zip
-        self.zip = zip
-
-    def __str__(self):
-        return "Dealer name: " + self.full_name
-
-
 class DealerReview:
 
     def __init__(self, dealership, name, purchase, review):
