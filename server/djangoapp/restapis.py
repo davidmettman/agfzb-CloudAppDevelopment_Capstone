@@ -5,8 +5,8 @@ from requests.auth import HTTPBasicAuth
 import time
  
 def analyze_review_sentiments(text):
-    url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/c8b0f019-31d6-41ac-b003-a2a31608839e"
-    api_key = "X2W_XG21E2BqmQ57cKeaX1rI9N43ZflG2KuaUmPJ_7wq"
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/8f1bf53d-cf37-4d38-a0ea-f54a4c1a82ff"
+    api_key = "Sr1S4B5dEisPJsXsAu_-T8D3Xw6Kxw1u9cM22rZahNW4"
     authenticator = IAMAuthenticator(api_key)
     natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
     natural_language_understanding.set_service_url(url)
@@ -63,19 +63,15 @@ def get_dealer_by_id_from_cf(url, id):
 
 def get_dealer_reviews_from_cf(url, dealer_id):
     results = []
-    id = dealer_id
-
+    id=dealer_id
     if id:
-        json_result = get_request(url, dealer_id=dealer_id)
+        json_result = get_request(url, id=id)
     else:
         json_result = get_request(url)
-
+    # print(json_result)
     if json_result:
-        reviews = json_result["body"]["data"]
-
+        reviews = json_result["body"]["data"]["docs"]
         for dealer_review in reviews:
-            dealer_review = reviews["docs"][0]
-            
             review_obj = DealerReview(dealership=dealer_review["dealership"],
                                    name=dealer_review["name"],
                                    purchase=dealer_review["purchase"],
@@ -95,7 +91,6 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             print(sentiment)
             review_obj.sentiment = sentiment
             results.append(review_obj)
-
     return results
 
 
