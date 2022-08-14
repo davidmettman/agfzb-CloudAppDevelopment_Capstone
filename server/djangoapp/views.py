@@ -128,7 +128,30 @@ def get_dealer_details(request, dealer_id):
         }
         dealer_details = render(request, 'djangoapp/dealer_details.html', context)
         return dealer_details
+
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    if request.user.is_authenticated:
+        new_review={}
+        new_review["dealership"]=dealer_id
+        new_review["time"] = datetime.utcnow().isoformat()
+        new_review["car_make"]="Ford"
+        new_review["car_model"]="Mustang"
+        new_review["car_year"]="2007"
+        new_review["purchase"]=True
+        new_review["purchase_date"]="07-01-2007"
+        new_review["review"]="Great Car dealer"
+        new_review
 
+        json_payload={}
+        json_payload["review"]=new_review
+
+        url="https://7a7b6d28.us-south.apigw.appdomain.cloud/api/api/review"
+        parameters={"dealership":dealer_id}
+        print("parameters: ",parameters)
+        post_response=post_request(url,json_payload)
+        print(post_response)
+        return post_response
+    else:
+        print("Please login to submit a review.")
