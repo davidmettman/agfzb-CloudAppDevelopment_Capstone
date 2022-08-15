@@ -51,11 +51,10 @@ def get_dealers_from_cf(url, **kwargs):
 def get_dealer_by_id_from_cf(url, id):
     result = []
 # - Call get_request() with specified arguments
-    json_result = get_request(url, id=id)
+    dealer = get_request(url, id=id)
     if json:
 # - Parse JSON results into a DealerView object list
-        dealer = json_result["rows"]
-        dealer_doc = dealer["doc"]
+        dealer_doc = dealer["body"]
         dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
                                     id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
                                     short_name=dealer_doc["short_name"],
@@ -126,6 +125,8 @@ def get_request(url, **kwargs):
 
 
 def post_request(url, payload, **kwargs):
+    json_data = dict()
+    response = dict()
     print(kwargs)
     print("POST to {} ".format(url))
     print(payload)
