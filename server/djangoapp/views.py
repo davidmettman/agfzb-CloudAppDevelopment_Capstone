@@ -117,8 +117,10 @@ def get_dealer_details(request, dealer_id):
 
         for review in reviews:
             dealer_reviews.append(review)
-
-        for name in reviews:
+        
+        url2 = "https://7a7b6d28.us-south.apigw.appdomain.cloud/api/api/dealership?id={}".format(dealer_id)
+        dealers = get_dealer_by_id_from_cf(url=url2, id=dealer_id)
+        for dealer in dealers:
             dealer_name.append(name)
         
         context = {
@@ -133,7 +135,7 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request, dealer_id):
 def add_review(request, dealer_id):
     if request.user.is_authenticated:
-        new_review={}
+        new_review=dict()
         new_review["dealership"]=dealer_id
         new_review["time"] = datetime.utcnow().isoformat()
         new_review["car_make"]="Ford"
@@ -142,7 +144,7 @@ def add_review(request, dealer_id):
         new_review["purchase"]=True
         new_review["purchase_date"]="07-01-2007"
         new_review["review"]="Great Car dealer"
-        new_review
+        new_review["name"]=username
 
         json_payload={}
         json_payload["review"]=new_review
@@ -150,8 +152,8 @@ def add_review(request, dealer_id):
         url="https://7a7b6d28.us-south.apigw.appdomain.cloud/api/api/review"
         parameters={"dealership":dealer_id}
         print("parameters: ",parameters)
-        post_response=post_request(url,json_payload)
+        post_response=post_request(url,payload=json_payload)
         print(post_response)
-        return post_response
+        return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
     else:
         print("Please login to submit a review.")
