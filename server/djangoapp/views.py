@@ -111,7 +111,8 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     dealer_reviews = []
-    dealer_names = []
+    dealer_details = []
+    dealer_id_temp = []
 
     if request.method == "GET":
         url1 = "https://7a7b6d28.us-south.apigw.appdomain.cloud/api/api/review"
@@ -124,13 +125,16 @@ def get_dealer_details(request, dealer_id):
         dealers = get_dealers_from_cf(url2)
         
         for dealer in dealers:
-            dealer_names.append(dealer)
+            dealer_id_temp = dealer.id
+            if dealer_id_temp == dealer_id:
+                dealer_details.append(dealer)
         
         context = {
-            "dealer_id":dealer_id,
-            "dealer_name" : dealer_names,
+            "dealer_id": dealer_id,
+            "dealer_details" : dealer_details,
             "reviews" : dealer_reviews
         }
+
         dealer_details = render(request, 'djangoapp/dealer_details.html', context)
         return dealer_details
 
