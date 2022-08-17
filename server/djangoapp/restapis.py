@@ -106,7 +106,6 @@ def get_request(url, **kwargs):
     json_data = json.loads(response.text)
     return json_data
 
-
 def post_request(url, payload, **kwargs):
     json_data = dict()
     response = dict()

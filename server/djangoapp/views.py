@@ -141,26 +141,33 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 def add_review(request, dealer_id):
-    if request.user.is_authenticated:
-        new_review=dict()
-        new_review["dealership"]=dealer_id
-        new_review["time"] = datetime.utcnow().isoformat()
-        new_review["car_make"]="Ford"
-        new_review["car_model"]="Mustang"
-        new_review["car_year"]="2007"
-        new_review["purchase"]=True
-        new_review["purchase_date"]="07-01-2007"
-        new_review["review"]="Great Car dealer"
-        new_review["name"]="User"
+    if request.method == "GET":
+        context = {}
+        context['dealer_id'] = dealer_id
+        context['dealer'] = get_dealer_detail_infos(dealer_id)
+        context['cars'] = CarModel.objects.all()
+        return render(request, 'djangoapp/add_review.html', context)
+    if request.method == "POST":
+        url = "https://7a7b6d28.us-south.apigw.appdomain.cloud/api/api/review"
+        tpayload = dict()
+        tpayload['name'] = request.POST['username']
+        tpayload['dealership'] = dealer_id
+        tpayload['review'] = request.POST['review']
+        tpayload['purchase'] = request.POST['purchase']
+        tpayload['purchase_date'] = request.POST['purchase_date']
+        tpayload['time'] = datetime.utcnow().isoformat()
+        car = CarModel.objects.get(id = request.POST['car'])
+        if car:
+            tpayload['car_make'] = car.make.name
+            tpayload['car_model'] = car.name
+            tpayload['car_year'] = car.year.strftime("%Y")
+        payload={}
+        payload["review"]=tpayload
+        post_response = post_request(url, payload=payload)
+    return redirect('djangoapp:dealer_details', dealer_id = dealer_id)
 
-        json_payload={}
-        json_payload["review"]=new_review
 
-        url="https://7a7b6d28.us-south.apigw.appdomain.cloud/api/api/review"
-        parameters={"dealership":dealer_id}
-        print("parameters: ",parameters)
-        post_response=post_request(url,payload=json_payload)
-        print(post_response)
-        return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
-    else:
-        print("Please login to submit a review.")
+def get_dealer_detail_infos(dealer_id):
+    url = "https://7a7b6d28.us-south.apigw.appdomain.cloud/api/api/dealership"
+    dealerships = get_dealers_from_cf(url)
+    return next(filter(lambda x: x.id == dealer_id, dealerships))
